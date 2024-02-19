@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  worker1:
+    build:
+      context: .
+    container_name: worker1
+    ports:
+      - "2222:22"
+    stdin_open: true
+    environment:
+      - MPI_HOSTS=/mpi/hosts
+      - MPI_HOSTFILE=/mpi/hosts
+    tty: true
+    volumes:
+      - ./src:/app
+      - ./mpi:/mpi
+
+  worker2:
+    build:
+      context: .
+    container_name: worker2
+    ports:
+      - "2223:22"
+    environment:
+      - MPI_HOSTS=/mpi/hosts
+      - MPI_HOSTFILE=/mpi/hosts
+    volumes:
+      - ./src:/app
+      - ./mpi:/mpi
+
+  worker3:
+    build:
+      context: .
+    container_name: worker3
+    ports:
+      - "2224:22"
+    environment:
+      - MPI_HOSTS=/mpi/hosts
+      - MPI_HOSTFILE=/mpi/hosts
+    volumes:
+      - ./src:/app
+      - ./mpi:/mpi
